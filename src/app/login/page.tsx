@@ -24,7 +24,7 @@ export default function LoginPage() {
       router.push('/dashboard');
     }
   };
-
+//gsap
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-6">
