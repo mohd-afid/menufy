@@ -45,15 +45,23 @@ export default function Home() {
           
           {/* Right side - Image */}
           <div className="flex justify-center lg:justify-end">
-            <div className="relative">
+            <div className="relative bg-gradient-to-br from-orange-100 via-yellow-50 to-orange-200 p-8 rounded-3xl shadow-2xl">
+              {/* Decorative background elements */}
+              <div className="absolute top-4 right-4 w-20 h-20 bg-orange-300 rounded-full opacity-20 animate-pulse"></div>
+              <div className="absolute bottom-6 left-6 w-16 h-16 bg-yellow-300 rounded-full opacity-30 animate-bounce"></div>
+              <div className="absolute top-1/2 left-4 w-12 h-12 bg-orange-400 rounded-full opacity-15"></div>
+              
               <Image
                 src="/images/1.png"
                 alt="QR Menu Restaurant Demo"
-                width={500}
-                height={400}
-                className="object-contain"
+                width={350}
+                height={180}
+                className="object-contain relative z-10"
                 priority
               />
+              
+              {/* Additional decorative overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-orange-200/20 to-transparent rounded-3xl pointer-events-none"></div>
             </div>
           </div>
         </div>
