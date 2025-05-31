@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FaCheckCircle, FaWhatsapp, FaInstagram, FaPhoneAlt, FaEnvelope, FaQrcode, FaMobileAlt, FaUtensils } from 'react-icons/fa';
+import { FaPhoneAlt, FaEnvelope, FaQrcode, FaMobileAlt, FaUtensils } from 'react-icons/fa';
 
 export default function Home() {
   return (
@@ -147,7 +147,7 @@ export default function Home() {
               
               <h3 className="text-2xl font-bold mb-4 text-gray-900">Turnover increase</h3>
               <p className="text-gray-600 leading-relaxed">
-                Digital QR code menu with photos ensures colorfulness and ease of choice for the customer. Looking at "appetizing" food photos, the guest feels comfortable and makes more spontaneous purchases.
+                Digital QR code menu with photos ensures colorfulness and ease of choice for the customer. Looking at &ldquo;appetizing&rdquo; food photos, the guest feels comfortable and makes more spontaneous purchases.
               </p>
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function Home() {
             <div className="bg-white p-8 rounded-xl shadow-sm">
               <h3 className="text-xl font-bold mb-4 text-gray-900">Instead of a thousand words</h3>
               <p className="text-gray-600">
-                HoReCa segment often doesn't pay enough attention to food photos. They keep making text menus without pictures, although over 60% of people on the Earth perceive the world around them visually.
+                HoReCa segment often doesn&apos;t pay enough attention to food photos. They keep making text menus without pictures, although over 60% of people on the Earth perceive the world around them visually.
               </p>
             </div>
             
@@ -244,7 +244,7 @@ export default function Home() {
             <div className="bg-white p-8 rounded-xl shadow-sm">
               <h3 className="text-xl font-bold mb-4 text-gray-900">Will the guest be able to place an order remotely using the QR menu?</h3>
               <p className="text-gray-600">
-                Yes, Menufy supports the function of remote dishes pre-ordering. The contactless menu can be accessed not only by scanning the QR code, but also via the link shared on the restaurant's social networks.
+                Yes, Menufy supports the function of remote dishes pre-ordering. The contactless menu can be accessed not only by scanning the QR code, but also via the link shared on the restaurant&apos;s social networks.
               </p>
             </div>
             

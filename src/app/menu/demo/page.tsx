@@ -162,7 +162,7 @@ export default function DemoMenuPage() {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Taste of Kerala</h1>
-            <p className="text-gray-600">Authentic flavors from God's Own Country</p>
+            <p className="text-gray-600">Authentic flavors from God&apos;s Own Country</p>
           </div>
           
           {/* Search Bar */}
