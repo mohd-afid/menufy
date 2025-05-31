@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'kerala-green': '#228B22',
+        'kerala-orange': '#FF6347',
+        'kerala-yellow': '#FFD700',
       },
     },
   },

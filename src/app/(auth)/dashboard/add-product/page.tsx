@@ -1,7 +1,9 @@
 "use client";
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createSafeSupabaseClient } from '@/lib/supabase';
+
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
 
 export default function AddProductPage() {
   const [name, setName] = useState('');
@@ -11,8 +13,6 @@ export default function AddProductPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const router = useRouter();
-  const supabase = createClientComponentClient();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -25,13 +25,21 @@ export default function AddProductPage() {
     setLoading(true);
     setError('');
     setSuccess('');
+    
+    const supabase = createSafeSupabaseClient();
+    if (!supabase) {
+      setError('Failed to initialize database connection');
+      setLoading(false);
+      return;
+    }
+    
     let imageUrl = '';
     try {
       // 1. Upload image if present
       if (image) {
         const fileExt = image.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
-        const { data, error: uploadError } = await supabase.storage.from('menu-images').upload(fileName, image);
+        const { error: uploadError } = await supabase.storage.from('menu-images').upload(fileName, image);
         if (uploadError) throw uploadError;
         const { data: publicUrlData } = supabase.storage.from('menu-images').getPublicUrl(fileName);
         imageUrl = publicUrlData.publicUrl;
@@ -53,8 +61,8 @@ export default function AddProductPage() {
       setImage(null);
       // Optionally redirect or refresh
       // router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setLoading(false);
     }

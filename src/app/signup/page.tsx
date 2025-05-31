@@ -1,7 +1,10 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createSafeSupabaseClient } from '@/lib/supabase';
+
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
@@ -9,12 +12,19 @@ export default function SignupPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const supabase = createClientComponentClient();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    
+    const supabase = createSafeSupabaseClient();
+    if (!supabase) {
+      setError('Failed to initialize authentication');
+      setLoading(false);
+      return;
+    }
+    
     const { error } = await supabase.auth.signUp({ email, password });
     setLoading(false);
     if (error) {

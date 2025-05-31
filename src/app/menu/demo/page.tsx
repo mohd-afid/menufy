@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 
 // Define a type for menu items
 interface MenuItem {
@@ -198,9 +199,11 @@ export default function DemoMenuPage() {
           >
             {/* Left: Image */}
             <div className="relative w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden">
-              <img
+              <Image
                 src={item.image}
                 alt={item.name}
+                width={112}
+                height={112}
                 className="w-full h-full object-cover"
               />
               {(item as MenuItem & { featured?: boolean }).featured && (
