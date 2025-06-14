@@ -2,261 +2,198 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-# Menufy - Smart QR Menu for Kerala Restaurants
+# Menufy - QR Menu Restaurant Management System
 
-A modern, contactless digital menu platform built with Next.js 15, TypeScript, and Supabase. Designed specifically for Kerala restaurants with Malayalam language support.
+A modern, full-stack restaurant management system that allows restaurant owners to create, manage, and display digital menus through QR codes. Built with Next.js 15, TypeScript, Tailwind CSS, and Supabase.
 
-## 🚀 Features
+## Features
 
-- **QR Code Menus**: Generate downloadable QR codes for contactless menu access
-- **Malayalam Support**: Bilingual menu items with Malayalam translations
-- **Restaurant Dashboard**: Manage menu items, categories, and QR codes
-- **Mobile Optimized**: Responsive design for all devices
-- **Real-time Updates**: Instant menu updates across all QR codes
-- **Image Upload**: Support for menu item images
-- **Search & Filter**: Easy menu navigation for customers
+### 🎯 Core Features
+- **Dynamic Restaurant Menus**: Create and manage multiple restaurants with custom menus
+- **QR Code Integration**: Generate QR codes for contactless menu access
+- **Modern UI/UX**: Beautiful, responsive design with mobile-first approach
+- **Real-time Menu Management**: Add, edit, and delete menu items instantly
+- **Category Organization**: Organize menu items into categories
+- **Smart Cart System**: Add to cart functionality with quantity controls
+- **Search & Filter**: Search menu items across categories
 
-## 🛠️ Tech Stack
+### 🏪 Restaurant Management
+- **Restaurant Dashboard**: Comprehensive dashboard for restaurant owners
+- **Menu Categories**: Create and organize menu categories
+- **Menu Items**: Add items with descriptions, prices, dietary information
+- **Dynamic Routing**: Each restaurant gets a unique URL (`/menu/restaurant-slug`)
+- **Responsive Design**: Works perfectly on all devices
 
-- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS
-- **Backend**: Supabase (PostgreSQL, Authentication, Storage)
-- **UI Components**: React 19, React Icons
-- **QR Generation**: qrcode.react
-- **Deployment**: Vercel (recommended)
+### 🔐 Authentication & Security
+- **Supabase Authentication**: Secure user management
+- **Row Level Security**: Data protection at database level
+- **Owner Permissions**: Restaurant owners can only manage their own data
 
-## 📁 Project Structure
+## Tech Stack
 
-```
-menufy/
-├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── (auth)/            # Protected routes
-│   │   │   └── dashboard/     # Dashboard pages
-│   │   ├── login/             # Authentication
-│   │   ├── signup/            # User registration
-│   │   └── menu/              # Public menu pages
-│   ├── components/            # Reusable components
-│   │   └── dashboard/         # Dashboard components
-│   ├── lib/                   # Utilities & configurations
-│   └── types/                 # TypeScript definitions
-├── public/                    # Static assets
-└── ...config files
-```
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Icons**: React Icons (Font Awesome)
+- **Image Optimization**: Next.js Image component
 
-## 🚀 Quick Start
+## Getting Started
 
 ### Prerequisites
-
-- Node.js 18+ and npm
+- Node.js 18+ 
+- npm or yarn
 - Supabase account
-- Git
 
 ### 1. Clone the Repository
-
 ```bash
-git clone https://github.com/mohd-afid/menufy.git
+git clone https://github.com/your-username/menufy.git
 cd menufy
 ```
 
 ### 2. Install Dependencies
-
 ```bash
 npm install
+# or
+yarn install
 ```
 
-### 3. Set Up Environment Variables
+### 3. Set Up Supabase
 
+1. Create a new project at [supabase.com](https://supabase.com)
+2. Go to Settings > API to get your keys
+3. Copy the SQL from `database/schema.sql` and run it in your Supabase SQL editor
+
+### 4. Environment Variables
 Create a `.env.local` file in the root directory:
 
 ```env
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-### 4. Set Up Supabase Database
-
-Create the following tables in your Supabase database:
-
-```sql
--- Restaurants table
-CREATE TABLE restaurants (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL,
-  logo TEXT,
-  contact TEXT NOT NULL,
-  user_id UUID REFERENCES auth.users(id),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Categories table
-CREATE TABLE categories (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
-  name TEXT NOT NULL,
-  name_ml TEXT, -- Malayalam name
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Menu Items table
-CREATE TABLE menu_items (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  category_id UUID REFERENCES categories(id) ON DELETE CASCADE,
-  name TEXT NOT NULL,
-  name_ml TEXT, -- Malayalam name
-  price DECIMAL(10,2) NOT NULL,
-  image_url TEXT,
-  description TEXT,
-  description_ml TEXT, -- Malayalam description
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
-
-### 5. Set Up Storage Bucket
-
-In Supabase Storage, create a bucket named `menu-images` for storing menu item images.
-
-### 6. Run Development Server
-
+### 5. Run the Development Server
 ```bash
 npm run dev
+# or
+yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-## 🚀 Deployment
+## Project Structure
 
-### Deploy to Vercel (Recommended)
-
-1. **Push to GitHub**: Make sure your code is pushed to a GitHub repository.
-
-2. **Connect to Vercel**:
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Vercel will auto-detect it's a Next.js project
-
-3. **Set Environment Variables**:
-   In your Vercel project settings, add:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-4. **Deploy**: Vercel will automatically build and deploy your application.
-
-### Manual Deployment
-
-```bash
-# Build the application
-npm run build
-
-# Start production server
-npm start
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   │   ├── restaurants/   # Restaurant CRUD operations
+│   │   ├── menu-categories/ # Category management
+│   │   └── menu-items/    # Menu item management
+│   ├── menu/[slug]/       # Dynamic restaurant menu pages
+│   ├── dashboard/         # Restaurant management dashboard
+│   └── page.tsx          # Landing page
+├── components/            # Reusable components
+├── lib/                  # Utility functions and configurations
+│   └── supabase.ts      # Supabase client setup
+└── types/                # TypeScript type definitions
+    └── restaurant.ts    # Restaurant-related types
 ```
 
-## 🔧 Configuration
+## Database Schema
 
-### Custom Colors (Kerala Theme)
+### Tables
+- **restaurants**: Restaurant information and settings
+- **menu_categories**: Menu category organization
+- **menu_items**: Individual menu items with pricing and details
 
-The app uses a Kerala-inspired color palette defined in `tailwind.config.ts`:
+### Key Features
+- UUID primary keys for security
+- Row Level Security (RLS) policies
+- Automatic timestamp updates
+- Optimized indexes for performance
 
-```typescript
-colors: {
-  'kerala-green': '#228B22',
-  'kerala-orange': '#FF6347', 
-  'kerala-yellow': '#FFD700',
-}
-```
+## API Endpoints
 
-### Image Domains
+### Restaurants
+- `GET /api/restaurants` - List restaurants
+- `POST /api/restaurants` - Create restaurant
+- `GET /api/restaurants/[slug]/menu` - Get complete restaurant menu
 
-Update `next.config.ts` to add allowed image domains:
+### Menu Categories
+- `GET /api/menu-categories?restaurant_id=` - List categories
+- `POST /api/menu-categories` - Create category
 
-```typescript
-images: {
-  domains: ['your-domain.com', 'supabase-storage-url'],
-}
-```
+### Menu Items
+- `GET /api/menu-items?restaurant_id=` - List items
+- `POST /api/menu-items` - Create menu item
 
-## 📱 Usage
+## Usage
 
 ### For Restaurant Owners
 
-1. **Sign Up**: Create an account at `/signup`
-2. **Dashboard**: Access your dashboard at `/dashboard`
-3. **Add Categories**: Organize your menu into categories
-4. **Add Menu Items**: Upload items with images, prices, and descriptions
-5. **Generate QR**: Download your restaurant's QR code
-6. **Print & Display**: Place QR codes on tables
+1. **Create Account**: Sign up through the authentication system
+2. **Access Dashboard**: Go to `/dashboard` to manage restaurants
+3. **Add Restaurant**: Create a new restaurant with basic information
+4. **Manage Menu**: Add categories and menu items
+5. **Share QR Code**: Generate and print QR codes for tables
 
 ### For Customers
 
-1. **Scan QR Code**: Use phone camera to scan the QR code
-2. **Browse Menu**: View categorized menu items with images
-3. **Search**: Find specific items quickly
-4. **Add to Cart**: Select items (if ordering is enabled)
+1. **Scan QR Code**: Use phone camera to scan restaurant QR code
+2. **Browse Menu**: Navigate through categories and items
+3. **Add to Cart**: Select items and quantities
+4. **Place Order**: Review and place order (integration pending)
 
-## 🛠️ Development
+## Demo
 
-### Available Scripts
+Visit the demo restaurant at [/menu/demo](http://localhost:3000/menu/demo) to see the system in action.
 
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
+The demo includes:
+- **Spice Garden Restaurant**: Sample Kerala cuisine restaurant
+- **Multiple Categories**: Appetizers, Main Course, Biryani & Rice, Beverages, Desserts
+- **25+ Menu Items**: Complete menu with pricing and descriptions
+- **Interactive Features**: Search, cart functionality, responsive design
 
-### Code Structure
+## Deployment
 
-- **Pages**: Located in `src/app/` using Next.js App Router
-- **Components**: Reusable UI components in `src/components/`
-- **Types**: TypeScript definitions in `src/types/`
-- **Utilities**: Helper functions in `src/lib/`
+### Vercel (Recommended)
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
 
-## 🔒 Authentication & Security
+### Other Platforms
+The app can be deployed to any platform that supports Next.js applications.
 
-- User authentication handled by Supabase Auth
-- Row Level Security (RLS) policies recommended for production
-- Environment variables for sensitive configuration
-- HTTPS enforced in production
-
-## 🌐 Internationalization
-
-The app supports Malayalam language for menu items:
-- `name` and `name_ml` for item names
-- `description` and `description_ml` for descriptions
-- Easily extendable for other languages
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -m 'Add feature'`
-4. Push to branch: `git push origin feature-name`
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+## Support
 
-For support and questions:
-- Create an issue on GitHub
-- Email: support@menufy.com
-- Documentation: [docs.menufy.com](https://docs.menufy.com)
+For support, email support@menufy.com or create an issue in the repository.
 
-## 🚀 Roadmap
+## Roadmap
 
-- [ ] Online ordering integration
-- [ ] Payment gateway integration
+- [ ] Payment integration
+- [ ] Order management system
+- [ ] Customer feedback system
 - [ ] Analytics dashboard
-- [ ] Multi-restaurant support
-- [ ] Mobile app
-- [ ] WhatsApp integration
-- [ ] Voice ordering support
+- [ ] Multi-language support
+- [ ] Inventory management
+- [ ] Staff management
+- [ ] Delivery integration
 
 ---
 
-**Made with ❤️ for Kerala restaurants**
+Made with ❤️ for Kerala restaurants and beyond!

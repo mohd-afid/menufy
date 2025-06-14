@@ -1,0 +1,65 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  try {
+    const { slug } = params;
+
+    // First get the restaurant
+    const { data: restaurant, error: restaurantError } = await supabase
+      .from('restaurants')
+      .select('*')
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .single();
+
+    if (restaurantError || !restaurant) {
+      return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 });
+    }
+
+    // Get menu categories
+    const { data: categories, error: categoriesError } = await supabase
+      .from('menu_categories')
+      .select('*')
+      .eq('restaurant_id', restaurant.id)
+      .eq('is_active', true)
+      .order('display_order', { ascending: true });
+
+    if (categoriesError) {
+      return NextResponse.json({ error: categoriesError.message }, { status: 500 });
+    }
+
+    // Get menu items for each category
+    const { data: menuItems, error: itemsError } = await supabase
+      .from('menu_items')
+      .select('*')
+      .eq('restaurant_id', restaurant.id)
+      .eq('is_available', true)
+      .order('display_order', { ascending: true });
+
+    if (itemsError) {
+      return NextResponse.json({ error: itemsError.message }, { status: 500 });
+    }
+
+    // Group items by category
+    const categoriesWithItems = categories.map(category => ({
+      ...category,
+      items: menuItems.filter(item => item.category_id === category.id)
+    }));
+
+    const restaurantWithMenu = {
+      ...restaurant,
+      categories: categoriesWithItems
+    };
+
+    return NextResponse.json(restaurantWithMenu);
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+} 

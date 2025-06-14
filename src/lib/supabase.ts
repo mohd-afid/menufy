@@ -4,14 +4,16 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
 
+// Check if we have real environment variables
+const hasValidConfig = supabaseUrl !== 'https://placeholder.supabase.co' && supabaseAnonKey !== 'placeholder-key';
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Safe client creation for client components
 export const createSafeSupabaseClient = () => {
   try {
-    // Check if we have real environment variables
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      console.warn('Supabase environment variables not found');
+    if (!hasValidConfig) {
+      console.warn('⚠️ Supabase environment variables not configured. Please set up your .env.local file with actual Supabase credentials.');
       return null;
     }
     return createClientComponentClient();

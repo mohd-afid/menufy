@@ -16,6 +16,7 @@ export default function Home() {
             <a href="#scenarios" className="text-xs sm:text-sm lg:text-base text-gray-600 hover:text-orange-600 font-medium transition px-2 py-1">Scenarios</a>
             <a href="#advantages" className="text-xs sm:text-sm lg:text-base text-gray-600 hover:text-orange-600 font-medium transition px-2 py-1">Advantages</a>
             <a href="#faq" className="text-xs sm:text-sm lg:text-base text-gray-600 hover:text-orange-600 font-medium transition px-2 py-1">FAQ</a>
+            <a href="/dashboard" className="text-xs sm:text-sm lg:text-base text-gray-600 hover:text-orange-600 font-medium transition px-2 py-1">Dashboard</a>
             <button className="bg-orange-500 text-white px-3 sm:px-4 lg:px-6 py-2 rounded-lg hover:bg-orange-600 transition text-xs sm:text-sm lg:text-base whitespace-nowrap">Get online menu</button>
           </div>
         </div>
