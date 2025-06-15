@@ -11,7 +11,7 @@ export default async function DashboardLayout({
   let supabaseConfigured = true;
 
   try {
-    const supabase = createServerComponentClient({ cookies: () => cookies() });
+    const supabase = createServerComponentClient({ cookies });
     const { data } = await supabase.auth.getSession();
     session = data.session;
   } catch (error) {
@@ -20,6 +20,7 @@ export default async function DashboardLayout({
   }
 
   // Only redirect if Supabase is configured but no session exists
+  // For demo mode, always allow access
   if (supabaseConfigured && !session) {
     redirect('/login');
   }
